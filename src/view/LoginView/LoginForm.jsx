@@ -1,5 +1,12 @@
 import React, { useRef, useState } from "react";
-import { View, Text, StyleSheet, TextInput, StatusBar, Platform } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  StatusBar,
+  Platform,
+} from "react-native";
 import Button from "../../components/Buttons/Button";
 import * as ImagePicker from "expo-image-picker";
 import ImageViewer from "../../components/ImageViews/ImageViews";
@@ -9,12 +16,12 @@ import EmojiPicker from "../../components/EmojiPicker/EmojiPicker";
 import EmojiList from "../../components/EmojiPicker/EmojiList";
 import EmojiSticker from "../../components/EmojiPicker/EmojiSticker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import * as MediaLibrary from 'expo-media-library';
-import domtoimage from 'dom-to-image';
+import * as MediaLibrary from "expo-media-library";
+import domtoimage from "dom-to-image";
 
 const placeholderImageSource = require("../../../assets/images/nature.jpeg");
 
-export default function LoginForm() {
+export default function LoginForm({navigation}) {
   const imageRef = useRef();
   const [selectedImage, setSelectedImage] = useState(null);
   const [showAppOption, setShowAppOption] = useState(false);
@@ -52,7 +59,7 @@ export default function LoginForm() {
   };
 
   const onSaveImageAsync = async () => {
-    if (Platform.OS !== 'web') {
+    if (Platform.OS !== "web") {
       try {
         const localUri = await captureRef(imageRef, {
           height: 440,
@@ -60,7 +67,7 @@ export default function LoginForm() {
         });
         await MediaLibrary.saveToLibraryAsync(localUri);
         if (localUri) {
-          alert('Saved!');
+          alert("Saved!");
         }
       } catch (e) {
         console.log(e);
@@ -68,17 +75,17 @@ export default function LoginForm() {
     } else {
       domtoimage
         .toJpeg(imageRef.current, {
-            quality: 0.95,
-            width: 320,
-            height: 440,
-          })
-        .then(dataUrl => {
-          let link = document.createElement('a');
-          link.download = 'sticker-smash.jpeg';
+          quality: 0.95,
+          width: 320,
+          height: 440,
+        })
+        .then((dataUrl) => {
+          let link = document.createElement("a");
+          link.download = "sticker-smash.jpeg";
           link.href = dataUrl;
           link.click();
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     }
@@ -96,7 +103,7 @@ export default function LoginForm() {
             <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
           ) : null}
         </View>
-      </View> 
+      </View>
       {showAppOption ? (
         <View style={styles.optionsContainer}>
           <View style={styles.optionsRow}>
@@ -119,6 +126,8 @@ export default function LoginForm() {
           <Button label="Use this photo" onPress={setShowAppOption(true)} />
         </View>
       )}
+
+      <Button title="Go back" onPress={() => navigation.goBack()} />
 
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
         <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
