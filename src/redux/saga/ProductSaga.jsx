@@ -5,8 +5,8 @@ import { getProductFailure, getProductSuccess } from "../actions/ProductAction";
 
 function* getUserSaga(action) {
   const { dataProduct } = action.payload;
-  console.log("dataProduct", dataProduct);
-  yield put(getProductSuccess({dataProduct}));
+
+  yield put(getProductSuccess({ dataProduct }));
 }
 
 function* productSaga() {

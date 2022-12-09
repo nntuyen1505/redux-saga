@@ -7,7 +7,7 @@ export const getProduct = (payload, callback = (error, data) => {}) => ({
 })
 
 export const getProductSuccess = payload => {
-    console.log('payload', payload)
+
     return {
         type: GET_PRODUCTS + SUCCESS,
         payload,

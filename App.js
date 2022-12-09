@@ -1,5 +1,4 @@
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import AppContainer from "./src/AppContainer";
 import "expo-dev-menu";
 import { Provider } from "react-redux";
